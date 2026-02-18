@@ -5,24 +5,13 @@
 public class Main {
 
     // סעיף א:
-    // receives flights array + a NON-permanent passenger.
-    // Find the shortest flight such that after taking it, passenger becomes permanent (>=20000).
-    // If there is room -> add to passengers list (any position).
-    // Else -> add to waiting queue.
-    // Must update passenger km and permPass accordingly.
+  
     public static void assignFlight(Flight[] flights, Passenger p) {
         // TODO (students)
     }
     
     // סעיף ב:
-    // receives flights array, an index in the array, and a passenger who cancels.
-    // Assume passenger exists in passengers list.
-    // Steps:
-    // 1) remove from passengers list
-    // 2) update the passenger km accumulation
-    // 3) fill the freed seat with:
-    //    - a permanent passenger from waiting with MAX km, if any permanent exist
-    //    - otherwise the first waiting passenger
+   
     public static void cancelAndReplace(Flight[] flights, int i, Passenger canceling) {
         // TODO (students)
     }
@@ -32,6 +21,8 @@ public class Main {
     /*
     סיבוכיות
     */
+
+    
     public static void main(String[] args) {
         // -----------------------------
         // Build flights
@@ -46,7 +37,7 @@ public class Main {
         // Seat available -> passenger goes to list.
         // -----------------------------
         Passenger p1 = new Passenger(111, "Noam", 18000); // needs 2000 -> F100 (3000)
-        Ex1.assignFlight(flights, p1);
+        assignFlight(flights, p1);
 
         assertTrue(p1.getKm() == 21000, "T1: p1 km should increase by 3000 (to 21000)");
         assertTrue(Boolean.TRUE.equals(p1.getPermPass()), "T1: p1 should become permanent");
@@ -55,7 +46,7 @@ public class Main {
 
         // Fill F100 second seat
         Passenger p2 = new Passenger(222, "Maya", 19000); // needs 1000 -> F100 (3000)
-        Ex1.assignFlight(flights, p2);
+        assignFlight(flights, p2);
 
         assertTrue(p2.getKm() == 22000, "T1b: p2 km should increase by 3000 (to 22000)");
         assertTrue(Boolean.TRUE.equals(p2.getPermPass()), "T1b: p2 should become permanent");
@@ -66,7 +57,7 @@ public class Main {
         // (still gets km updated in assignFlight)
         // -----------------------------
         Passenger p3 = new Passenger(333, "Lior", 19900); // needs 100 -> F100 (3000) makes perm, but F100 is full
-        Ex1.assignFlight(flights, p3);
+        assignFlight(flights, p3);
 
         assertTrue(p3.getKm() == 22900, "T2: p3 km should increase by 3000 (to 22900)");
         assertTrue(Boolean.TRUE.equals(p3.getPermPass()), "T2: p3 should be permanent");
@@ -78,7 +69,7 @@ public class Main {
         // p4: 15000 + 3000 = 18000 (not enough), so should pick F200 (7000) => 22000
         // -----------------------------
         Passenger p4 = new Passenger(444, "Dana", 15000);
-        Ex1.assignFlight(flights, p4);
+        assignFlight(flights, p4);
 
         assertTrue(p4.getKm() == 22000, "T3: p4 km should increase by 7000 (to 22000)");
         assertTrue(Boolean.TRUE.equals(p4.getPermPass()), "T3: p4 should become permanent");
@@ -92,7 +83,7 @@ public class Main {
         // - freed seat filled from waiting:
         //   choose permanent passenger with MAX km from waiting (here only p3)
         // -----------------------------
-        Ex1.cancelAndReplace(flights, 0, p2);
+        cancelAndReplace(flights, 0, p2);
 
         assertTrue(!containsInList(flights[0].getPassengers(), p2), "T4: p2 should be removed from F100 passengers");
         assertTrue(p2.getKm() == 19000, "T4: p2 km should decrease by 3000 (back to 19000)");
@@ -109,7 +100,7 @@ public class Main {
         Passenger np = new Passenger(555, "Ori", 5000); // non-permanent
         flights[1].getWaiting().enqueue(np);            // manual setup for the test
 
-        Ex1.cancelAndReplace(flights, 1, p4);           // cancel p4 from F200
+        cancelAndReplace(flights, 1, p4);           // cancel p4 from F200
 
         assertTrue(!containsInList(flights[1].getPassengers(), p4), "T5: p4 should be removed from F200 passengers");
         assertTrue(p4.getKm() == 15000, "T5: p4 km should decrease by 7000 (back to 15000)");
