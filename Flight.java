@@ -10,7 +10,7 @@ public class Flight {
         this.capacity = capacity;
         this.km = km;
         this.passengers = null;
-        this.waiting = new LinkedQueue<>();
+        this.waiting = new Queue<>();
     }
 
     public String getFlightNum() { return flightNum; }
